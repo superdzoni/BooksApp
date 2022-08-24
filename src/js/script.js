@@ -16,12 +16,17 @@
     imageParams: {
       id: '.book-id',
     },
+
+    filtersOf: {
+      form: '.filters',
+    }
   };
 
   const templates = {
     bookTemplate: Handlebars.compile(document.querySelector(select.templateOf.books).innerHTML),
   };
-  let favoriteBooks = [];
+  const favoriteBooks = [];
+  const filters = [];
 
   function render() {
     for(let book of dataSource.books) {
@@ -51,6 +56,18 @@
         }
       }
     });
-
+    const filter = document.querySelector(select.filtersOf.form);
+    filter.addEventListener('click', function(event){
+      const filterValue = event.target.value;
+      if(event.target.tagName == 'INPUT' && event.target.type == 'checkbox' && event.target.name == 'filter') {
+        if(event.target.checked) {
+          filters.push(filterValue);
+        } else {
+          const indexOfFilters = filters.indexOf(filterValue);
+          filters.splice(indexOfFilters, 1);
+          event.target.offsetParent.classList.remove('filterValue');
+        }
+      }
+    });
   }
 }
