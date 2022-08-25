@@ -55,7 +55,7 @@
       for(const book of thisBooksList.data) {
         const ratingBgc = thisBooksList.determineRatingBgc(book.rating);
         book.ratingBgc = ratingBgc;
-        const ratingWidth = book.ratingBgc * 10;
+        const ratingWidth = book.rating * 10;
         book.ratingWidth = ratingWidth;
         const generatedHTML = templates.bookTemplate(book);
         thisBooksList.bookDOMElement = utils.createDOMFromHTML(generatedHTML);
