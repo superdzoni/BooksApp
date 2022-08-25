@@ -68,6 +68,26 @@
           event.target.offsetParent.classList.remove('filterValue');
         }
       }
+      filterBooks();
     });
+  }
+
+  function filterBooks() {
+    for(const book of dataSource.books) {
+      let shouldBeHidden = false;
+      for(const filter of filters) {
+        if(!book.details[filter]) {
+          shouldBeHidden = true;
+          break;
+        }
+      }
+      const id = book.id;
+      const bookItem = document.querySelector('.book__image[data-id="'+id+'"]');
+      if(shouldBeHidden == true){
+        bookItem.classList.add('hidden');
+      } else {
+        bookItem.classList.remove('hidden');
+      }
+    }
   }
 }
