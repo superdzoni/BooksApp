@@ -30,15 +30,16 @@
 
   function render() {
     for(let book of dataSource.books) {
+      const ratingBgc = determineRatingBgc(book.rating);
+      book.ratingBgc = ratingBgc;
+      const ratingWidth = book.ratingBgc * 10;
+      book.ratingWidth = ratingWidth;
       const generatedHTML = templates.bookTemplate(book);
       const bookDOMElement = utils.createDOMFromHTML(generatedHTML);
       const bookListContainer = document.querySelector(select.listOf.bookList);
       bookListContainer.appendChild(bookDOMElement);
     }
   }
-
-  render();
-  initActions();
 
   function initActions() {
     const imageContainer = document.querySelector(select.listOf.bookList);
@@ -81,8 +82,7 @@
           break;
         }
       }
-      const id = book.id;
-      const bookItem = document.querySelector('.book__image[data-id="'+id+'"]');
+      const bookItem = document.querySelector('.book__image[data-id="'+book.id+'"]');
       if(shouldBeHidden == true){
         bookItem.classList.add('hidden');
       } else {
@@ -90,4 +90,21 @@
       }
     }
   }
+
+  function determineRatingBgc(rating) {
+    let background = '';
+    if(rating < 6){
+      background = 'linear-gradient(to bottom, #fefcea 0%, #f1da36 100%)';
+    } else if(rating > 6 && rating <= 8) {
+      background = 'linear-gradient(to bottom, #b4df5b 0%, #b4df5b 100%)';
+    } else if(rating > 8 && rating <= 9) {
+      background = 'linear-gradient(to bottom, #299a0b 0%, #299a0b 100%)';
+    } else if (rating > 9) {
+      background = 'linear-gradient(to bottom, #ff0084 0%, #ff0084 100%)';
+    }
+    return background;
+  }
+
+  render();
+  initActions();
 }
